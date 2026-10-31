@@ -41,5 +41,10 @@ showDonors(donors);
 function searchDonor(){let b=document.getElementById('bloodFilter').value;let a=document.getElementById('areaFilter').value;let f=donors.filter(d=>(b==="All"||d.blood===b)&&(a==="All"||d.area===a));showDonors(f);}
 function addDonor(){let n=document.getElementById('name').value;let p=document.getElementById('phone').value;let b=document.getElementById('blood').value;let ar=document.getElementById('area').value;if(n==""||p==""){alert("Naam ar Phone dao!");return;}donors.unshift({name:n,blood:b,area:ar,phone:p});localStorage.setItem('mirpurDonors',JSON.stringify(donors));showDonors(donors);alert("Added!");}
 </script>
+<!-- MANUS GONAR CCTV -->
+<div style="text-align:center; margin:20px; background:white; padding:15px; border-radius:15px;">
+<p style="color:#c92a2a; font-weight:bold; margin:0;">❤️ Mot Manus Dekheche:</p>
+<img src="https://hitwebcounter.com/counter/counter.php?page=9300010&style=0006&nbdigits=5&type=page&initCount=0" title="Counter" Alt="hit counter" border="0" />
+</div>
 </body>
 </html>
