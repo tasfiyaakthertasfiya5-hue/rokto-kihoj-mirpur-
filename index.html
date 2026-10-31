@@ -41,12 +41,13 @@ showDonors(donors);
 function searchDonor(){let b=document.getElementById('bloodFilter').value;let a=document.getElementById('areaFilter').value;let f=donors.filter(d=>(b==="All"||d.blood===b)&&(a==="All"||d.area===a));showDonors(f);}
 function addDonor(){let n=document.getElementById('name').value;let p=document.getElementById('phone').value;let b=document.getElementById('blood').value;let ar=document.getElementById('area').value;if(n==""||p==""){alert("Naam ar Phone dao!");return;}donors.unshift({name:n,blood:b,area:ar,phone:p});localStorage.setItem('mirpurDonors',JSON.stringify(donors));showDonors(donors);alert("Added!");}
 </script>
-<!-- NAGAD HELP BUTTON -->
+<!-- NAGAD HELP BUTTON SAFE -->
 <div style="text-align:center; background:#fff0f5; padding:20px; border-radius:15px; margin:20px 0; border:2px solid #ff2e7e;">
   <h3 style="color:#ff2e7e; margin:0 0 10px 0;">❤️ Jann ke Help Koro</h3>
-  <p style="margin:0 0 10px 0;">Rokter khoj site ta valo lagle 20 taka diye help koro</p>
-  <a href="tel:01749902775" style="background:#ff2e7e; color:white; padding:12px 25px; border-radius:25px; text-decoration:none; font-weight:bold; display:inline-block;">Nagad: 01749902775</a>
+  <p style="margin:0 0 10px 0;">Site ta valo lagle help koro</p>
+  <button onclick="navigator.clipboard.writeText('01749902775'); alert('Nagad Number Copy Hoise! ❤️')" style="background:#ff2e7e; color:white; padding:12px 25px; border-radius:25px; border:none; font-weight:bold; cursor:pointer;">Nagad e Help Koro (Click)</button>
   <p style="font-size:12px; margin-top:8px;">Click korle number copy hobe</p>
+</div>
 </div>
 <!-- MANUS GONAR CCTV -->
 <div style="text-align:center; margin:20px; background:white; padding:15px; border-radius:15px;">
