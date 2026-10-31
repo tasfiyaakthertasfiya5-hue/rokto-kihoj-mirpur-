@@ -1,40 +1,45 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rokto Khoj Mirpur</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rokto Khoj Mirpur - Real Help</title>
 <style>
-body{font-family:sans-serif; background:#fff5f5; margin:0; padding:0; text-align:center;}
-.header{background:#c0392b; color:white; padding:20px;}
-.card{background:white; margin:15px; padding:15px; border-radius:10px; box-shadow:0 2px 5px #ccc;}
-button{background:#c0392b; color:white; border:none; padding:10px 20px; border-radius:5px;}
+body{font-family:system-ui;margin:0;background:#fff5f5;text-align:center}
+.header{background:#c92a2a;color:white;padding:25px}
+.card{background:white;margin:15px;padding:18px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+button{background:#c92a2a;color:white;border:none;padding:10px 22px;border-radius:8px;font-weight:bold}
+input,select{padding:10px;margin:5px;border-radius:8px;border:1px solid #ccc;width:85%;max-width:280px}
+.form{background:#ffe3e3}
 </style>
 </head>
 <body>
 <div class="header">
 <h1>🩸 Rokto Khoj Mirpur</h1>
-<p>Mirpur er jonno free blood donor khojar website</p>
+<p>Mirpur er jonno free & real blood donor</p>
 </div>
-
 <div class="card">
 <h3>Find Donor</h3>
-<select><option>A+</option><option>B+</option><option>O+</option><option>AB+</option></select>
-<button>Search</button>
+<select id="bloodFilter"><option value="All">All Blood</option><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>O-</option></select>
+<select id="areaFilter"><option value="All">All Mirpur</option><option>Mirpur 10</option><option>Mirpur 1</option><option>Mirpur 2</option></select>
+<button onclick="searchDonor()">Search</button>
 </div>
-
-<div class="card">
-<h3>Md. Rakib Hasan - A+</h3>
-<p>Mirpur 10 | Available Now</p>
-<button>Call</button>
+<div id="donorList"></div>
+<div class="card form">
+<h3>🤝 Become a Donor - Add Yourself</h3>
+<input id="name" placeholder="Tomar Naam"><br>
+<input id="phone" placeholder="Phone 017..."><br>
+<select id="blood"><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>O-</option></select><br>
+<select id="area"><option>Mirpur 10</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 6</option></select><br><br>
+<button onclick="addDonor()">Add Me As Donor ❤️</button>
 </div>
-
-<div class="card">
-<h3>Sadia Akter - O-</h3>
-<p>Mirpur 1 | Available Now</p>
-<button>Request</button>
-</div>
-
-<p>Built by Jann - Future Doctor + Coder</p>
+<p style="padding:20px;font-weight:bold">Built by Jann</p>
+<script>
+let donors = JSON.parse(localStorage.getItem('mirpurDonors')) || [{name:"Rakib", blood:"A+", area:"Mirpur 10", phone:"01700000001"}];
+function showDonors(list){let html="";list.forEach(d=>{html+=`<div class="card"><h3>${d.name} - ${d.blood}</h3><p>${d.area}</p><a href="tel:${d.phone}"><button>📞 Call</button></a> <a href="https://wa.me/88${d.phone}"><button style="background:#25D366">WhatsApp</button></a></div>`;});document.getElementById('donorList').innerHTML=html;}
+showDonors(donors);
+function searchDonor(){let b=document.getElementById('bloodFilter').value;let a=document.getElementById('areaFilter').value;let f=donors.filter(d=>(b==="All"||d.blood===b)&&(a==="All"||d.area===a));showDonors(f);}
+function addDonor(){let n=document.getElementById('name').value;let p=document.getElementById('phone').value;let b=document.getElementById('blood').value;let ar=document.getElementById('area').value;if(n==""||p==""){alert("Naam ar Phone dao!");return;}donors.unshift({name:n,blood:b,area:ar,phone:p});localStorage.setItem('mirpurDonors',JSON.stringify(donors));showDonors(donors);alert("Added!");}
+</script>
 </body>
-</html 
+</html>
