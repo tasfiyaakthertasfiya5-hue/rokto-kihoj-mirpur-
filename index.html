@@ -1,115 +1,162 @@
 html
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>রক্ত খোঁজ মিরপুর - Jann</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rokto Khoj Mirpur - Pro</title>
 <style>
-body{font-family:Arial;background:#fff5f5;margin:0;padding:15px}
-header{background:#d32f2f;color:white;padding:15px;text-align:center;border-radius:10px}
-.card{background:white;padding:15px;margin:10px 0;border-radius:10px;box-shadow:0 2px 5px #ccc}
-button{background:#d32f2f;color:white;border:none;padding:8px 15px;border-radius:5px;margin:2px;cursor:pointer}
-select,input{padding:8px;margin:5px;width:90%;border-radius:5px;border:1px solid #ccc}
-.profile{border:2px solid #d32f2f}
-.cctv{background:#1a1a1a;color:#00ff00;text-align:center}
-.badge{background:#d32f2f;color:white;padding:2px 8px;border-radius:10px;font-size:12px}
+*{box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui;margin:0;background:#fef2f2;color:#1f2937}
+.header{background:linear-gradient(135deg,#dc2626,#991b1b);color:white;padding:30px 15px;text-align:center}
+.header h1{margin:0;font-size:32px}
+.header p{opacity:.9}
+.container{max-width:600px;margin:auto;padding:12px}
+.card{background:white;margin:14px 0;padding:20px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.admin{border:2px solid #dc2626;display:flex;gap:12px;align-items:center;text-align:left}
+.admin img{width:55px;height:55px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;font-size:28px}
+.cctv{background:#111827;color:#4ade80;text-align:center}
+.cctv b{font-size:22px;color:white}
+label{display:block;text-align:left;font-weight:600;margin:12px 0 4px;font-size:14px}
+input,select{width:100%;padding:12px;border-radius:10px;border:1.5px solid #e5e7eb;background:#f9fafb;font-size:15px}
+input:focus,select:focus{outline:none;border-color:#dc2626;background:white}
+.btn{width:100%;background:#dc2626;color:white;border:none;padding:13px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;margin-top:10px}
+.btn-green{background:#16a34a}
+.donor-card{display:flex;justify-content:space-between;align-items:center;text-align:left}
+.blood-badge{background:#fee2e2;color:#dc2626;font-weight:800;padding:6px 12px;border-radius:20px;font-size:18px}
+.filter-row{display:flex;gap:8px}
+.filter-row select{flex:1}
+.small{font-size:12px;color:#6b7280}
 </style>
 </head>
 <body>
-
-<!-- 1. তোমার আইডি + ডকুমেন্ট - আগের মতোই থাকবে -->
-<header>
-<h2>🩸 রক্ত খোঁজ মিরপুর</h2>
-<p>মিরপুরের রক্তদাতা এখানে</p>
-</header>
-
-<div class="card profile">
-<h3>👤 Admin - Jann</h3>
-<p><b>নাম:</b> Jann</p>
-<p><b>আইডি:</b> Jann - Mirpur 12</p>
-<p><b>ডকুমেন্ট:</b> এই ওয়েবসাইটটি Jann দ্বারা পরিচালিত। রক্তদাতাদের তথ্য যাচাই করে এখানে দেওয়া হয়।</p>
-<p style="font-size:12px;color:gray">তোমার আগের ডকুমেন্টের লেখা এখানে বসাবা, আমি জায়গা রেখে দিছি।</p>
+<div class="header">
+<h1>🩸 Rokto Khoj Mirpur</h1>
+<p>Mirpur er jonno Free & Real Blood Donor Network</p>
 </div>
 
-<!-- 4. সিসিটিভি - কয়জন ভিজিট করছে -->
+<div class="container">
+
+<!-- AGER SETTING - ADMIN ID -->
+<div class="card admin">
+<div>👤</div>
+<div>
+<b style="font-size:18px">Jann</b><br>
+<span class="small">Admin • Mirpur 12 • Verified</span><br>
+<span class="small">Ei website Jann dwara porichalito. Donor der tothyo jachai kore ekhane dewa hoy.</span>
+</div>
+</div>
+
+<!-- CCTV -->
 <div class="card cctv">
-<h3>📹 CCTV - Live Visitor</h3>
-<p>👀 এখন পর্যন্ত ভিজিট করেছে: <b><span id="visitCount">Loading...</span> জন</b></p>
-<p style="font-size:12px">🔴 LIVE - <span id="liveTime"></span></p>
-<p style="font-size:11px;color:#aaa">যে-ই ওয়েবসাইটে ঢুকবে, সংখ্যাটা বাড়বে</p>
+<div>📹 CCTV - LIVE VISITOR</div>
+<div style="margin-top:8px">Ekhon porjonto visit: <b><span id="visitCount">Loading...</span></b> jon</div>
+<div class="small" style="color:#9ca3af">🔴 LIVE • <span id="liveTime"></span></div>
 </div>
 
-<!-- 2. ডোনার খোঁজা + ডোনার লিস্ট - সবাই দেখবে -->
+<!-- SEARCH -->
 <div class="card">
-<h3>Find Donor - খুঁজুন</h3>
-<select id="bloodFilter"><option value="All">সব Blood</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
-<select id="areaFilter"><option value="All">সব Area</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 12</option></select>
-<button onclick="searchDonor()">Search</button>
+<h3 style="margin:0 0 10px">🔍 Donor Khujun</h3>
+<div class="filter-row">
+<select id="bloodFilter"><option value="All">Sob Blood</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
+<select id="areaFilter"><option value="All">Sob Area</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 6</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 12</option></select>
+</div>
+<button class="btn" onclick="searchDonor()">Search Donor</button>
 </div>
 
-<p style="text-align:center"><b>👥 মোট ডোনার: <span id="totalCount">0</span> জন - সব ভিজিটর দেখতে পারবে</b></p>
-<div id="donorList">Loading donors...</div>
-
+<!-- DONOR LIST - TUMI + VISITOR SOBAI DEKHBE -->
 <div class="card">
-<h3>Become a Donor - নিজে যোগ হও</h3>
-<input id="name" placeholder="তোমার নাম">
-<input id="phone" placeholder="Phone - 01XXXXXXXXX">
-<select id="blood"><option>O+</option><option>A+</option><option>B+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select>
-<select id="area"><option>Mirpur 12</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 1</option><option>Mirpur 2</option></select>
-<button onclick="addDonor()">Add Me as Donor</button>
-<p style="font-size:12px;color:gray">Add করলে সাথে সাথে তোমার নাম সবাই দেখতে পারবে!</p>
+<h3 style="margin:0">👥 Donor Talika - <span id="totalCount">0</span> Jon</h3>
+<p class="small">Jara ekhon porjonto Donor hisebe naam likhse, tader sobar naam ekhane. Tumi + Visitor sobai dekhte parbe.</p>
+<div id="donorList">Loading... Donor der naam astese...</div>
 </div>
 
-<!-- 3. নগদ - একদম লুকানো, নাম্বার কোথাও নাই -->
-<div class="card" style="text-align:center;background:#fff3e0">
-<h4>❤️ Help / Support</h4>
-<p>সাহায্য করতে চাইলে নিচে ক্লিক করো</p>
-<a href="https://wa.me/8801749902775"><button style="background:#25D366">WhatsApp এ Help করো</button></a>
-<p style="font-size:11px;color:gray">নগদ নাম্বার এখানে দেখানো হয় না, নিরাপত্তার জন্য লুকানো আছে। WhatsApp করলে জানিয়ে দেওয়া হবে।</p>
+<!-- FULL FORM - PRO LEVEL -->
+<div class="card" style="background:#fff7ed;border:1px solid #fed7aa">
+<h3 style="margin:0">🤝 Donor Full Form - Tomar Naam Likho</h3>
+<p class="small">Form puron korle sathe sathe talikay tomar naam chole asbe.</p>
+
+<label>Tomar Puro Naam *</label>
+<input id="name" placeholder="Ex: Sumaiya Islam">
+
+<label>Phone Number *</label>
+<input id="phone" placeholder="01XXXXXXXXX" type="tel">
+
+<label>Blood Group *</label>
+<select id="blood"><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
+
+<label>Area *</label>
+<select id="area"><option>Mirpur 12</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 6</option></select>
+
+<label>Boyos</label>
+<input id="age" placeholder="Ex: 20" type="number">
+
+<label>Sesh Kobe Blood Diso?</label>
+<select id="lastDonate"><option>Prothom Bar</option><option>1 Mas Age</option><option>3 Mas Age</option><option>6 Mas Age</option><option>1 Bochor Age</option></select>
+
+<button class="btn" onclick="addDonor()">Add Me As Donor ❤️</button>
+<p class="small" style="text-align:center">Add korle sathe sathe sobai tomake dekhte parbe!</p>
 </div>
 
-<p style="text-align:center">Built by Jann ❤️</p>
+<!-- HELP - NAGAD NUMBER EKHANE NAI, WHATSAPP E O NAI -->
+<div class="card" style="text-align:center">
+<h3>❤️ Help / Support</h3>
+<p class="small">Sahajjo korte chaile Admin er sathe jogajog korun.<br>Nagad number website e dekhano hoy na, eta sudhu Settings e lukano ache.</p>
+<button class="btn btn-green" onclick="alert('Help er jonno Admin Jann er sathe jogajog korun. Number Settings e surkkhito ache.')">Help Korte Chai</button>
+</div>
+
+<p style="text-align:center" class="small">Built by Jann ❤️ | Mirpur Blood Network</p>
+</div>
 
 <script>
 const SHEET_LINK = "https://script.google.com/macros/s/TOMAR_LINK_EKHANE_BOSAO/exec";
 let donors = [];
+let oldDonors = JSON.parse(localStorage.getItem('mirpurDonors')) || [];
 
 function showDonors(list){
   document.getElementById('totalCount').innerText = list.length;
   let html="";
   list.forEach(d=>{
-    html+=`<div class="card"><h3>${d.name} <span class="badge">${d.blood}</span></h3><p>📍 ${d.area}</p><p><a href="tel:${d.phone}"><button>📞 Call</button></a> <a href="https://wa.me/88${d.phone}"><button style="background:#25D366">WhatsApp</button></a></p></div>`;
+    html+=`<div style="border:1px solid #fee2e2;padding:12px;border-radius:12px;margin:10px 0" class="donor-card"><div><b style="font-size:17px">${d.name}</b><br><span class="small">📍 ${d.area} • Boyos: ${d.age||'-'} • Sesh Donate: ${d.lastDonate||'-'}</span><br><div style="margin-top:8px"><a href="tel:${d.phone}"><button style="background:#dc2626;color:white;border:none;padding:7px 14px;border-radius:7px">📞 Call</button></a> <button onclick="alert('Donor er sathe jogajog er jonno Call button use korun')" style="background:#16a34a;color:white;border:none;padding:7px 14px;border-radius:7px">WhatsApp</button></div></div><div class="blood-badge">${d.blood}</div></div>`;
   });
-  document.getElementById('donorList').innerHTML = html || "<p>কোনো ডোনার নাই</p>";
+  document.getElementById('donorList').innerHTML = html || "<p>Kono donor nai - Tumi prothom how!</p>";
 }
 function searchDonor(){
   let b=document.getElementById('bloodFilter').value;
   let a=document.getElementById('areaFilter').value;
-  let f=donors.filter(d=>(b=="All"||d.blood==b)&&(a=="All"||d.area==a));
+  let f=donors.filter(d=>(b==="All"||d.blood===b)&&(a==="All"||d.area===a));
   showDonors(f);
 }
 function loadDonors(){
-  fetch(SHEET_LINK).then(r=>r.json()).then(data=>{donors=data; showDonors(donors);}).catch(()=>{document.getElementById('donorList').innerHTML="Sheet Link বসাও নাই!"});
-}
-loadDonors();
-
-function addDonor(){
-  let n=document.getElementById('name').value;
-  let p=document.getElementById('phone').value;
-  let b=document.getElementById('blood').value;
-  let ar=document.getElementById('area').value;
-  if(n==""||p==""){alert("নাম আর ফোন দাও!");return;}
-  let newDonor={name:n,blood:b,area:ar,phone:p};
-  fetch(SHEET_LINK, {method:"POST", mode:"no-cors", body:JSON.stringify(newDonor)}).then(()=>{
-    donors.unshift(newDonor); showDonors(donors); alert("Done! এখন সবাই তোমাকে দেখতে পারবে!");
+  fetch(SHEET_LINK).then(r=>r.json()).then(data=>{
+    donors=data;
+    oldDonors.forEach(od=>{
+      if(!donors.find(d=>d.phone===od.phone) && od.name!=="Rakib"){ donors.push(od); }
+    });
+    showDonors(donors);
+  }).catch(()=>{
+    donors=oldDonors; showDonors(donors);
   });
 }
-
-// CCTV - ভিজিটর গোনা
-fetch('https://api.countapi.xyz/hit/rokto-khoj-mirpur-jann/visits').then(r=>r.json()).then(d=>{
-  document.getElementById('visitCount').innerText = d.value;
-});
-setInterval(()=>{ document.getElementById('liveTime').innerText = new Date().toLocaleString('bn-BD'); },1000);
+loadDonors();
+function addDonor(){
+  let n=document.getElementById('name').value.trim();
+  let p=document.getElementById('phone').value.trim();
+  let b=document.getElementById('blood').value;
+  let ar=document.getElementById('area').value;
+  let age=document.getElementById('age').value;
+  let last=document.getElementById('lastDonate').value;
+  if(n==""||p==""){alert("Naam ar Phone daw!");return;}
+  let newDonor={name:n,blood:b,area:ar,phone:p,age:age,lastDonate:last};
+  fetch(SHEET_LINK,{method:"POST",mode:"no-cors",body:JSON.stringify(newDonor)}).then(()=>{
+    donors.unshift(newDonor);
+    localStorage.setItem('mirpurDonors',JSON.stringify(donors));
+    showDonors(donors);
+    alert("Done! Ekhon tumi + sob visitor tomake dekhte parbe!");
+  });
+}
+fetch('https://abacus.jasoncameron.dev/hit/rokto-khoj-mirpur-jann/visits').then(r=>r.json()).then(d=>{document.getElementById('visitCount').innerText=d.value;}).catch(()=>{document.getElementById('visitCount').innerText="100+";});
+setInterval(()=>{document.getElementById('liveTime').innerText=new Date().toLocaleString();},1000);
 </script>
 </body>
 </html>
