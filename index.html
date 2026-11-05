@@ -1,58 +1,87 @@
-u<!DOCTYPE html>
-<html lang="en">
+html
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rokto Khoj Mirpur - Real Help</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rokto Khoj Mirpur</title>
 <style>
-body{font-family:system-ui;margin:0;background:#fff5f5;text-align:center}
-.header{background:#c92a2a;color:white;padding:25px}
-.card{background:white;margin:15px;padding:18px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
-button{background:#c92a2a;color:white;border:none;padding:10px 22px;border-radius:8px;font-weight:bold}
-input,select{padding:10px;margin:5px;border-radius:8px;border:1px solid #ccc;width:85%;max-width:280px}
-.form{background:#ffe3e3}
+body{font-family:Arial;background:#fff5f5;margin:0;padding:15px}
+header{background:#d32f2f;color:white;padding:15px;text-align:center;border-radius:10px}
+.card{background:white;padding:15px;margin:10px 0;border-radius:10px;box-shadow:0 2px 5px #ccc}
+button{background:#d32f2f;color:white;border:none;padding:8px 15px;border-radius:5px;margin:2px}
+select,input{padding:8px;margin:5px;width:90%;border-radius:5px;border:1px solid #ccc}
 </style>
 </head>
 <body>
-<div class="header">
-<h1>🩸 Rokto Khoj Mirpur</h1>
-<p>Mirpur er jonno free & real blood donor</p>
-</div>
+<header><h2>🩸 Rokto Khoj Mirpur</h2><p>Mirpur er rokto data ekhane</p></header>
+
 <div class="card">
 <h3>Find Donor</h3>
-<select id="bloodFilter"><option value="All">All Blood</option><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>O-</option></select>
-<select id="areaFilter"><option value="All">All Mirpur</option><option>Mirpur 10</option><option>Mirpur 1</option><option>Mirpur 2</option></select>
+<select id="bloodFilter"><option value="All">All Blood</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
+<select id="areaFilter"><option value="All">All Area</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 12</option></select>
 <button onclick="searchDonor()">Search</button>
 </div>
-<div id="donorList"></div>
-<div class="card form">
-<h3>🤝 Become a Donor - Add Yourself</h3>
-<input id="name" placeholder="Tomar Naam"><br>
-<input id="phone" placeholder="Phone 017..."><br>
-<select id="blood"><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>O-</option></select><br>
-<select id="area"><option>Mirpur 10</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 6</option></select><br><br>
-<button onclick="addDonor()">Add Me As Donor ❤️</button>
+
+<div id="donorList">Loading donors...</div>
+
+<div class="card">
+<h3>Become a Donor - Add Yourself</h3>
+<p>Tomar permission chara nije add hote parbe!</p>
+<input id="name" placeholder="Tomar Naam - Sumaiya islam">
+<input id="phone" placeholder="Phone - 01626300699">
+<select id="blood"><option>O+</option><option>A+</option><option>B+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select>
+<select id="area"><option>Mirpur 12</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 1</option><option>Mirpur 2</option></select>
+<button onclick="addDonor()">Add Me as Donor</button>
+<p style="font-size:12px;color:gray">Add korle sathe sathe sobai dekhte parbe!</p>
 </div>
-<p style="padding:20px;font-weight:bold">Built by Jann</p>
+
+<p style="text-align:center">Built by Jann ❤️</p>
+
+<div class="card" style="text-align:center">
+<h4>Help - Nagad</h4>
+<p>Support er jonno: 01749902775</p>
+<a href="https://wa.me/8801749902775"><button style="background:#25D366">WhatsApp e Help</button></a>
+</div>
+
 <script>
-let donors = JSON.parse(localStorage.getItem('mirpurDonors')) || [{name:"Rakib", blood:"A+", area:"Mirpur 10", phone:"01700000001"}];
-function showDonors(list){let html="";list.forEach(d=>{html+=`<div class="card"><h3>${d.name} - ${d.blood}</h3><p>${d.area}</p><a href="tel:${d.phone}"><button>📞 Call</button></a> <a href="https://wa.me/88${d.phone}"><button style="background:#25D366">WhatsApp</button></a></div>`;});document.getElementById('donorList').innerHTML=html;}
-showDonors(donors);
-function searchDonor(){let b=document.getElementById('bloodFilter').value;let a=document.getElementById('areaFilter').value;let f=donors.filter(d=>(b==="All"||d.blood===b)&&(a==="All"||d.area===a));showDonors(f);}
-function addDonor(){let n=document.getElementById('name').value;let p=document.getElementById('phone').value;let b=document.getElementById('blood').value;let ar=document.getElementById('area').value;if(n==""||p==""){alert("Naam ar Phone dao!");return;}donors.unshift({name:n,blood:b,area:ar,phone:p});localStorage.setItem('mirpurDonors',JSON.stringify(donors));showDonors(donors);alert("Added!");}
+const SHEET_LINK = "https://script.google.com/macros/s/TOMAR_LINK_EKHANE_BOSAO/exec";
+
+let donors = [];
+function showDonors(list){
+  let html="";
+  list.forEach(d=>{
+    html+=`<div class="card"><h3>${d.name} - ${d.blood}</h3><p>📍 ${d.area}</p><p><a href="tel:${d.phone}"><button>📞 Call</button></a> <a href="https://wa.me/88${d.phone}"><button style="background:#25D366">WhatsApp</button></a></p></div>`;
+  });
+  document.getElementById('donorList').innerHTML = html || "<p>Kono donor nai</p>";
+}
+function searchDonor(){
+  let b=document.getElementById('bloodFilter').value;
+  let a=document.getElementById('areaFilter').value;
+  let f=donors.filter(d=>(b=="All"||d.blood==b)&&(a=="All"||d.area==a));
+  showDonors(f);
+}
+function loadDonors(){
+  fetch(SHEET_LINK).then(r=>r.json()).then(data=>{donors=data; showDonors(donors);});
+}
+loadDonors();
+
+function addDonor(){
+  let n=document.getElementById('name').value;
+  let p=document.getElementById('phone').value;
+  let b=document.getElementById('blood').value;
+  let ar=document.getElementById('area').value;
+  if(n==""||p==""){alert("Naam ar Phone dao!");return;}
+  let newDonor={name:n,blood:b,area:ar,phone:p};
+  document.getElementById('donorList').innerHTML = "Adding...";
+  fetch(SHEET_LINK, {method:"POST", mode:"no-cors", body:JSON.stringify(newDonor)}).then(()=>{
+    donors.unshift(newDonor); showDonors(donors);
+    alert("Done! Ekhon tumi + sob visitor dekhte parbe!");
+  });
+}
 </script>
-<!-- NAGAD HELP BUTTON SAFE -->
-<div style="text-align:center; background:#fff0f5; padding:20px; border-radius:15px; margin:20px 0; border:2px solid #ff2e7e;">
-  <h3 style="color:#ff2e7e; margin:0 0 10px 0;">❤️ Jann ke Help Koro</h3>
-  <p style="margin:0 0 10px 0;">Site ta valo lagle help koro</p>
-  <button onclick="navigator.clipboard.writeText('01749902775'); alert('Nagad Number Copy Hoise! ❤️')" style="background:#ff2e7e; color:white; padding:12px 25px; border-radius:25px; border:none; font-weight:bold; cursor:pointer;">Nagad e Help Koro (Click)</button>
-  <p style="font-size:12px; margin-top:8px;">Click korle number copy hobe</p>
-</div>
-</div>
-<!-- MANUS GONAR CCTV -->
-<div style="text-align:center; margin:20px; background:white; padding:15px; border-radius:15px;">
-<p style="color:#c92a2a; font-weight:bold; margin:0;">❤️ Mot Manus Dekheche:</p>
-<img src="https://hitwebcounter.com/counter/counter.php?page=9300010&style=0006&nbdigits=5&type=page&initCount=0" title="Counter" Alt="hit counter" border="0" />
-</div>
+
+<!-- Tomar ager Manus gonar CCTV hitwebcounter -->
+<div style="text-align:center"><img src="https://hitwebcounter.com/counter/counter.php?page=123456&style=0001&nbdigits=5&type=page&initCount=0" /></div>
+
 </body>
-</html
+</html>
