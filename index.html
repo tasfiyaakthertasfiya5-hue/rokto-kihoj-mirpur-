@@ -18,7 +18,6 @@ body{font-family:'Segoe UI',system-ui;margin:0;background:#fef2f2;color:#1f2937}
 .cctv b{font-size:22px;color:white}
 label{display:block;text-align:left;font-weight:600;margin:12px 0 4px;font-size:14px}
 input,select{width:100%;padding:12px;border-radius:10px;border:1.5px solid #e5e7eb;background:#f9fafb;font-size:15px}
-input:focus{outline:none;border-color:#dc2626;background:white}
 .btn{width:100%;background:#dc2626;color:white;border:none;padding:13px;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;margin-top:10px}
 .btn-green{background:#16a34a}
 .donor-card{display:flex;justify-content:space-between;align-items:center;text-align:left;border:1px solid #fee2e2;padding:12px;border-radius:12px;margin:10px 0}
@@ -35,17 +34,17 @@ input:focus{outline:none;border-color:#dc2626;background:white}
 <!-- AGER SETTING - ADMIN -->
 <div class="card admin"><div style="font-size:30px">👤</div><div><b style="font-size:18px">Jann</b><br><span class="small">Admin • Mirpur 12 • Verified</span><br><span class="small">Ei website Jann dwara porichalito.</span></div></div>
 
-<!-- AGER SETTING - CCTV / VISITOR -->
+<!-- AGER SETTING - CCTV -->
 <div class="card cctv"><div>📹 CCTV - LIVE VISITOR</div><div style="margin-top:8px">Ekhon porjonto visit: <b><span id="visitCount">Loading...</span></b> jon</div><div class="small" style="color:#9ca3af">🔴 LIVE • <span id="liveTime"></span></div></div>
 
 <!-- SEARCH -->
 <div class="card"><h3 style="margin:0 0 10px">🔍 Donor Khujun</h3><div class="filter-row"><select id="bloodFilter"><option value="All">Sob Blood</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select><select id="areaFilter"><option value="All">Sob Area</option><option>Mirpur 1</option><option>Mirpur 2</option><option>Mirpur 6</option><option>Mirpur 10</option><option>Mirpur 11</option><option>Mirpur 12</option></select></div><button class="btn" onclick="searchDonor()">Search Donor</button></div>
 
-<!-- DONOR LIST - EITAI MAIN CHANGE -->
-<div class="card"><h3 style="margin:0">👥 Donor Talika - <span id="totalCount">0</span> Jon</h3><p class="small">Age jara dise + ekhon jara dibe - sobar naam ekhane dekhbe. Tumi + Visitor sobai dekhte parbe.</p><div id="donorList">Loading... Donor der naam astese...</div><button class="btn btn-green" onclick="loadDonors()">🔄 List Refresh Koro</button></div>
+<!-- DONOR LIST -->
+<div class="card"><h3 style="margin:0">👥 Donor Talika - <span id="totalCount">0</span> Jon</h3><p class="small">Age jara dise + ekhon jara dibe - sobar naam ekhane. Tumi + Visitor sobai dekhte parbe.</p><div id="donorList">Loading...</div><button class="btn btn-green" onclick="loadDonors()">🔄 List Refresh Koro</button></div>
 
-<!-- FULL FORM -->
-<div class="card" style="background:#fff7ed;border:1px solid #fed7aa"><h3 style="margin:0">🤝 Donor Full Form</h3><p class="small">Form puron korle sathe sathe talikay tomar naam chole asbe, sobai dekhbe.</p>
+<!-- FORM -->
+<div class="card" style="background:#fff7ed;border:1px solid #fed7aa"><h3 style="margin:0">🤝 Donor Full Form</h3><p class="small">Form puron korle sathe sathe talikay tomar naam chole asbe.</p>
 <label>Tomar Puro Naam *</label><input id="name" placeholder="Ex: Sumaiya Islam">
 <label>Phone Number *</label><input id="phone" placeholder="01XXXXXXXXX" type="tel">
 <label>Blood Group *</label><select id="blood"><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
@@ -54,23 +53,30 @@ input:focus{outline:none;border-color:#dc2626;background:white}
 <label>Sesh Kobe Blood Diso?</label><select id="lastDonate"><option>Prothom Bar</option><option>1 Mas Age</option><option>3 Mas Age</option><option>6 Mas Age</option><option>1 Bochor Age</option></select>
 <button class="btn" onclick="addDonor()">Add Me As Donor ❤️</button></div>
 
-<!-- HELP - NAGAD LUKANO -->
-<div class="card" style="text-align:center"><h3>❤️ Help / Support</h3><p class="small">Nagad number website e dekhano hoy na, eta sudhu Settings e lukano ache.</p><button class="btn btn-green" onclick="alert('Help er jonno Admin Jann er sathe jogajog korun. Number Settings e surkkhito ache.')">Help Korte Chai</button></div>
-<p style="text-align:center" class="small">Built by Jann ❤️ | Mirpur Blood Network</p>
+<div class="card" style="text-align:center"><h3>❤️ Help / Support</h3><p class="small">Nagad number website e dekhano hoy na, eta sudhu Settings e lukano ache.</p><button class="btn btn-green" onclick="alert('Help er jonno Admin Jann er sathe jogajog korun.')">Help Korte Chai</button></div>
+<p style="text-align:center" class="small">Built by Jann ❤️</p>
 </div>
 
 <script>
-// *** EKHANE TOMAR EXEC LINK BOSABA ***
 const SHEET_LINK = "https://script.google.com/macros/s/TOMAR_LINK_EKHANE_BOSAO/exec";
-let donors = [];
+
+// 1. PURANO DONOR - JARA AGE NAAM DISE, TADER KE CODE E FIX KORE DILAM, JATE AR HARAY NA
+let fixedDonors = [
+  {name:"Shakib", blood:"B+", area:"Mirpur 10", phone:"", age:"", lastDonate:""},
+  {name:"Rakib", blood:"A+", area:"Mirpur 10", phone:"", age:"", lastDonate:""},
+  {name:"M.Tanzid", blood:"O+", area:"Mirpur 1", phone:"", age:"", lastDonate:""},
+  {name:"Sumaiya Islam", blood:"O+", area:"Mirpur 10", phone:"", age:"", lastDonate:""}
+];
+let donors = [...fixedDonors];
 
 function showDonors(list){
   document.getElementById('totalCount').innerText = list.length;
   let html="";
   list.forEach(d=>{
-    html+=`<div class="donor-card"><div><b style="font-size:17px">${d.name}</b><br><span class="small">📍 ${d.area} • Boyos: ${d.age||'-'} • Sesh Donate: ${d.lastDonate||'-'}</span><br><div style="margin-top:8px"><a href="tel:${d.phone}"><button style="background:#dc2626;color:white;border:none;padding:7px 14px;border-radius:7px">📞 Call</button></a></div></div><div class="blood-badge">${d.blood}</div></div>`;
+    let callBtn = d.phone ? `<a href="tel:${d.phone}"><button style="background:#dc2626;color:white;border:none;padding:7px 14px;border-radius:7px">📞 Call</button></a>` : `<button onclick="alert('Ei donor er number Sheet e add kora nai. Admin ke bolun.')" style="background:#9ca3af;color:white;border:none;padding:7px 14px;border-radius:7px">📞 Call</button>`;
+    html+=`<div class="donor-card"><div><b style="font-size:17px">${d.name}</b><br><span class="small">📍 ${d.area} • Boyos: ${d.age||'-'} • Sesh Donate: ${d.lastDonate||'-'}</span><br><div style="margin-top:8px">${callBtn}</div></div><div class="blood-badge">${d.blood}</div></div>`;
   });
-  document.getElementById('donorList').innerHTML = html || "<p>Kono donor nai - Tumi prothom how! Age jara dise tader ke abar form puron korte bolo.</p>";
+  document.getElementById('donorList').innerHTML = html;
 }
 function searchDonor(){
   let b=document.getElementById('bloodFilter').value;
@@ -79,10 +85,22 @@ function searchDonor(){
   showDonors(f);
 }
 function loadDonors(){
-  document.getElementById('donorList').innerHTML = "Loading...";
-  fetch(SHEET_LINK).then(r=>r.json()).then(data=>{ donors=data; showDonors(donors); }).catch(()=>{ document.getElementById('donorList').innerHTML = "Sheet Link bosano nai! Tai naam astese na. TOMAR_LINK_EKHANE_BOSAO er jaygay exec link bosaw."; });
+  showDonors(donors);
+  // 2. SHEET THEKE NOTUN DONOR ANBE
+  fetch(SHEET_LINK).then(r=>r.json()).then(data=>{
+    if(data && data.length>0){
+      // Purano 4 jon + Sheet er notun sobai - duplicate bad diye
+      let all = [...fixedDonors];
+      data.forEach(sd=>{
+        if(!all.find(d=>d.name===sd.name && d.phone===sd.phone)){ all.push(sd); }
+      });
+      donors = all;
+      showDonors(donors);
+    }
+  }).catch(()=>{ /* Sheet link na thakleo purano 4 jon dekhabe */ });
 }
 loadDonors();
+
 function addDonor(){
   let n=document.getElementById('name').value.trim();
   let p=document.getElementById('phone').value.trim();
@@ -93,8 +111,9 @@ function addDonor(){
   if(n==""||p==""){alert("Naam ar Phone daw!");return;}
   let newDonor={name:n,blood:b,area:ar,phone:p,age:age,lastDonate:last};
   fetch(SHEET_LINK,{method:"POST",mode:"no-cors",body:JSON.stringify(newDonor)}).then(()=>{
-    alert("Done! Ekhon tumi + sob visitor tomake dekhte parbe! 2 sec por list refresh hobe.");
-    setTimeout(loadDonors, 1500);
+    donors.unshift(newDonor);
+    showDonors(donors);
+    alert("Done! Ekhon tumi + sob visitor tomake dekhte parbe!");
   });
 }
 fetch('https://abacus.jasoncameron.dev/hit/rokto-khoj-mirpur-jann/visits').then(r=>r.json()).then(d=>{document.getElementById('visitCount').innerText=d.value;}).catch(()=>{document.getElementById('visitCount').innerText="100+";});
